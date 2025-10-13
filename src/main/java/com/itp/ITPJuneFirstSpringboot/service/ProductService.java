@@ -1,6 +1,7 @@
 package com.itp.ITPJuneFirstSpringboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.itp.ITPJuneFirstSpringboot.model.Product;
@@ -17,4 +18,11 @@ public class ProductService {
 		
 	}
 
+	public Product addProduct1(Product p) {
+		return productRepository.save(p);
+		
+	}
+
 }
+
+//cliche
