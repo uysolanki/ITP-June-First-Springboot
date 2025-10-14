@@ -136,6 +136,28 @@ public class ProductController {
 	return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 	}
+	
+	
+	@GetMapping("/getAllProductsAbove100") 
+	public List<Product> getAllProductsAbove100()
+	{
+	List<Product> products=	productService.getAllProductsAbove100();
+	return products;
+	}
+	
+	@GetMapping("/getAllProductsAboveXUsingNativeQuery/{amount}") 
+	public List<Product> getAllProductsAboveXUsingNativeQuery(@PathVariable double amount)
+	{
+	List<Product> products=	productService.getAllProductsAboveXAmount(amount);
+	return products;
+	}
+	
+	@GetMapping("/getAllProductsByPriceRange/{start}/{end}") 
+	public List<Product> getAllProductsByPriceRange(@PathVariable double start,@PathVariable double end)
+	{
+	List<Product> products=	productService.getAllProductsByPriceRange(start,end);
+	return products;
+	}
 }
 
 /*

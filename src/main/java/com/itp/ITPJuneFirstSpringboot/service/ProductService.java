@@ -46,6 +46,19 @@ public class ProductService {
 		return productRepository.findById(pid).orElseThrow(()->new ProductNotFoundException("Product Not Found"));
 		}
 
+	public List<Product> getAllProductsAbove100() {
+		return productRepository.getAllProductAboveRs100();
+	}
+
+	public List<Product> getAllProductsAboveXAmount(double amount) {
+		//return productRepository.getAllProductAboveRsX(amount);
+		return productRepository.findByPriceGreaterThan(amount);
+	}
+
+	public List<Product> getAllProductsByPriceRange(double start, double end) {
+		return productRepository.findByPriceBetween(start, end);
+	}
+
 }
 
 //cliche
