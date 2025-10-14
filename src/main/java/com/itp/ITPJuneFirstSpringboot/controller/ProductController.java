@@ -1,12 +1,19 @@
 package com.itp.ITPJuneFirstSpringboot.controller;
 
+import java.awt.color.ProfileDataException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itp.ITPJuneFirstSpringboot.exception.ProductNotFoundException;
 import com.itp.ITPJuneFirstSpringboot.model.Product;
 import com.itp.ITPJuneFirstSpringboot.service.ProductService;
 
@@ -17,7 +24,7 @@ public class ProductController {
 	ProductService productService;
 	
 	@PostMapping("/addProduct")  //end point / api
-	public String addProduct()
+	public ResponseEntity<String>  addProduct()
 	{
 		Product p=Product.builder()
 				.productTitle("Mobile")
@@ -27,11 +34,11 @@ public class ProductController {
 				.build();
 		
 		productService.addProduct(p);
-		return "Product added Successfully";
+		return new ResponseEntity<String>("Product added Successfully",HttpStatus.OK); //200
 	}
 	
 	@PostMapping("/addProduct1")  //end point / api
-	public Product addProduct1()
+	public ResponseEntity<Product> addProduct1()
 	{
 		Product p=Product.builder()
 				.productTitle("Marker")
@@ -41,7 +48,7 @@ public class ProductController {
 				.build();
 		
 		Product p1=productService.addProduct1(p);
-		return p1;
+		return new ResponseEntity<Product>(p1,HttpStatus.CREATED);  //201
 	}
 	
 	
@@ -89,7 +96,45 @@ public class ProductController {
 	@PostMapping("/addProductByRequestBody")  //end point / api
 	public Product addProductByRequestBody(@RequestBody Product p)
 	{		
-		return productService.addProduct1(p);
+		return productService.addProduct1(p); 
+	}
+	
+	
+	@GetMapping("/getAllProducts") 
+	public List<Product> getAllProducts()
+	{
+	List<Product> products=	productService.getAllProducts();
+	return products;
+	}
+	
+	@GetMapping("/getAllProductById/{pid}") 
+	public ResponseEntity<?> getAllProductById(@PathVariable int pid)
+	{
+	try
+	{
+	Product product=productService.getAllProductById(pid);
+	return new ResponseEntity<Product>(product,HttpStatus.OK);
+	}
+	catch(RuntimeException ex1)
+	{
+	return new ResponseEntity<String>(ex1.getMessage(),HttpStatus.BAD_REQUEST);
+	}
+	
+	}
+
+	@GetMapping("/getAllProductById1/{pid}") 
+	public ResponseEntity<?> getAllProductById1(@PathVariable int pid)
+	{
+	Product product=null;
+	try
+	{
+	product=productService.getAllProductById1(pid);
+	return new ResponseEntity<Product>(product,HttpStatus.OK) ;
+	}
+	catch(ProductNotFoundException ex)
+	{
+	return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+	}
 	}
 }
 

@@ -1,9 +1,12 @@
 package com.itp.ITPJuneFirstSpringboot.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.itp.ITPJuneFirstSpringboot.exception.ProductNotFoundException;
 import com.itp.ITPJuneFirstSpringboot.model.Product;
 import com.itp.ITPJuneFirstSpringboot.repository.ProductRepository;
 
@@ -22,6 +25,26 @@ public class ProductService {
 		return productRepository.save(p);
 		
 	}
+
+	public List<Product> getAllProducts() {
+		return productRepository.findAll();
+	}
+
+	public Product getAllProductById(int pid) {
+	Optional<Product> productBox=productRepository.findById(pid);
+	Product product=null;
+	if(productBox.isPresent())
+	{
+		product=productBox.get();
+	}
+	else throw new ProductNotFoundException("Product Not Found");
+	return product;
+	}
+	
+	
+	public Product getAllProductById1(int pid) {
+		return productRepository.findById(pid).orElseThrow(()->new ProductNotFoundException("Product Not Found"));
+		}
 
 }
 

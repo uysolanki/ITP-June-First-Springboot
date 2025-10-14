@@ -1,5 +1,7 @@
 package com.itp.ITPJuneFirstSpringboot.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,4 +26,5 @@ public class Product {
 	private String productDesc;
 	private String productCategory;
 	private double price;
+	private List<String> color;
 }
