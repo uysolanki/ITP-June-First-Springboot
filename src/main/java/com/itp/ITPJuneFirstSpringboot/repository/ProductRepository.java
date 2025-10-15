@@ -20,4 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 		public  List<Product> findByPriceGreaterThan(double value);
 		
 		public  List<Product> findByPriceBetween(double startPrice,double endPrice);
+		
+		public  List<Product> findByProductCategory(String category);
+		
+		public  List<Product> findByProductDescContaining(String keyword);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.itp.ITPJuneFirstSpringboot.exception.ProductNotFoundException;
@@ -57,6 +58,22 @@ public class ProductService {
 
 	public List<Product> getAllProductsByPriceRange(double start, double end) {
 		return productRepository.findByPriceBetween(start, end);
+	}
+
+	public List<Product> addMultipleProducts(List<Product> products) {
+		return productRepository.saveAll(products);
+	}
+
+	public List<Product> getProductByCategory(String cat) {
+		return productRepository.findByProductCategory(cat);
+	}
+
+	public List<Product> getSortedProducts(String field, String direction) {
+		return productRepository.findAll(Sort.by(Sort.Direction.valueOf(direction.toUpperCase()),field));
+	}
+
+	public List<Product> searchProducts(String keyword) {
+		return productRepository.findByProductDescContaining(keyword);
 	}
 
 }

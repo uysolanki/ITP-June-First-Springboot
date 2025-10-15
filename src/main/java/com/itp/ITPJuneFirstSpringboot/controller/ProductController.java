@@ -99,6 +99,12 @@ public class ProductController {
 		return productService.addProduct1(p); 
 	}
 	
+	@PostMapping("/addMultipleProducts")  //end point / api
+	public List<Product> addMultipleProducts(@RequestBody List<Product> products)
+	{		
+		return productService.addMultipleProducts(products); 
+	}
+	
 	
 	@GetMapping("/getAllProducts") 
 	public List<Product> getAllProducts()
@@ -121,6 +127,24 @@ public class ProductController {
 	}
 	
 	}
+	
+	
+	@GetMapping("/getProductByCategory/{cat}") 
+	public ResponseEntity<?> getProductByCategory(@PathVariable String cat)
+	{
+	try
+	{
+	List<Product> products=productService.getProductByCategory(cat);
+	return new ResponseEntity<List<Product>>(products,HttpStatus.OK);
+	}
+	catch(RuntimeException ex1)
+	{
+	return new ResponseEntity<String>(ex1.getMessage(),HttpStatus.BAD_REQUEST);
+	}
+	
+	}
+	
+	
 
 	@GetMapping("/getAllProductById1/{pid}") 
 	public ResponseEntity<?> getAllProductById1(@PathVariable int pid)
@@ -136,7 +160,6 @@ public class ProductController {
 	return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 	}
-	
 	
 	@GetMapping("/getAllProductsAbove100") 
 	public List<Product> getAllProductsAbove100()
@@ -158,6 +181,23 @@ public class ProductController {
 	List<Product> products=	productService.getAllProductsByPriceRange(start,end);
 	return products;
 	}
+	
+	
+	@GetMapping("/getSortedProducts/{field}/{direction}") 
+	public List<Product> getSortedProducts(@PathVariable String field,@PathVariable String direction)
+	{
+	List<Product> products=	productService.getSortedProducts(field,direction);
+	return products;
+	}
+	
+	
+	@GetMapping("/searchProducts/{keyword}") 
+	public List<Product> searchProducts(@PathVariable String keyword)
+	{
+	List<Product> products=	productService.searchProducts(keyword);
+	return products;
+	}
+	
 }
 
 /*

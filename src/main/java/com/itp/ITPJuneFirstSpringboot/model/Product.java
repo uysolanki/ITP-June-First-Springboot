@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Product {
-
+public class Product 
+{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pid;
@@ -26,5 +26,5 @@ public class Product {
 	private String productDesc;
 	private String productCategory;
 	private double price;
-	private List<String> color;
 }
+
