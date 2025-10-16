@@ -82,6 +82,11 @@ public class ProductService {
 		return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
 	}
 
+	public Page<Product> getProductBySortingAndPagination(String field, int pageNumber, int pageSize) {
+		return productRepository.findAll(PageRequest.of(pageNumber, pageSize)
+				.withSort(Sort.by(Sort.Direction.ASC,field)));
+	}
+
 }
 
 //cliche

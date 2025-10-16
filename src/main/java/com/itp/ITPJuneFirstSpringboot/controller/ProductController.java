@@ -204,6 +204,14 @@ public class ProductController {
 	return products;
 	}
 	
+	
+	@GetMapping("/getProductBySortingAndPagination/{field}/{pageNumber}/{pageSize}") 
+	public Page<Product> getProductBySortingAndPagination(@PathVariable String field,@PathVariable int pageNumber,@PathVariable int pageSize)
+	{
+	Page<Product> products=	productService.getProductBySortingAndPagination(field,pageNumber,pageSize);
+	return products;
+	}
+	
 }
 
 /*
