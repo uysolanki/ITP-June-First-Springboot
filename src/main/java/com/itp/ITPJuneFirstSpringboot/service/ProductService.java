@@ -95,6 +95,11 @@ public class ProductService {
 		return productRepository.findAll(pageable);
 	}
 
+	public void deleteProduct(int pid) {
+		productRepository.deleteById(pid);
+		
+	}
+
 }
 
 //cliche
