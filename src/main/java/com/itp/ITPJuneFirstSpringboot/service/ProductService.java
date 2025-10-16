@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +86,13 @@ public class ProductService {
 	public Page<Product> getProductBySortingAndPagination(String field, int pageNumber, int pageSize) {
 		return productRepository.findAll(PageRequest.of(pageNumber, pageSize)
 				.withSort(Sort.by(Sort.Direction.ASC,field)));
+	}
+	
+	
+	public Page<Product> getProductBySortingAndPagination1(String field, int pageNumber, int pageSize) 
+	{
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(field)); 
+		return productRepository.findAll(pageable);
 	}
 
 }

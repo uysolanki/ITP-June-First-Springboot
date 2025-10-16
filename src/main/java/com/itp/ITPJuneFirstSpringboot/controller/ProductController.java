@@ -208,7 +208,7 @@ public class ProductController {
 	@GetMapping("/getProductBySortingAndPagination/{field}/{pageNumber}/{pageSize}") 
 	public Page<Product> getProductBySortingAndPagination(@PathVariable String field,@PathVariable int pageNumber,@PathVariable int pageSize)
 	{
-	Page<Product> products=	productService.getProductBySortingAndPagination(field,pageNumber,pageSize);
+	Page<Product> products=	productService.getProductBySortingAndPagination1(field,pageNumber,pageSize);
 	return products;
 	}
 	
