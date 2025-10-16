@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +76,10 @@ public class ProductService {
 
 	public List<Product> searchProducts(String keyword) {
 		return productRepository.findByProductDescContaining(keyword);
+	}
+
+	public Page<Product> getProductByPagination(int pageNumber, int pageSize) {
+		return productRepository.findAll(PageRequest.of(pageNumber, pageSize));
 	}
 
 }

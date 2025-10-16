@@ -1,11 +1,10 @@
 package com.itp.ITPJuneFirstSpringboot.controller;
 
-import java.awt.color.ProfileDataException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -195,6 +194,13 @@ public class ProductController {
 	public List<Product> searchProducts(@PathVariable String keyword)
 	{
 	List<Product> products=	productService.searchProducts(keyword);
+	return products;
+	}
+	
+	@GetMapping("/getProductByPagination/{pageNumber}/{pageSize}") 
+	public Page<Product> getProductByPagination(@PathVariable int pageNumber,@PathVariable int pageSize)
+	{
+	Page<Product> products=	productService.getProductByPagination(pageNumber,pageSize);
 	return products;
 	}
 	
