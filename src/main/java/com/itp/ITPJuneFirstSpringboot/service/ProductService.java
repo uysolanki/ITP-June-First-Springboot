@@ -97,6 +97,16 @@ public class ProductService {
 
 	public void deleteProduct(int pid) {
 		productRepository.deleteById(pid);
+	}
+
+	public void updateProduct(int pid, Product newValues) {
+	Product productFromDB=getAllProductById(pid);
+	productFromDB.setPrice(newValues.getPrice());
+	productFromDB.setProductCategory(newValues.getProductCategory());
+	productFromDB.setProductDesc(newValues.getProductDesc());
+	productFromDB.setProductTitle(newValues.getProductTitle());
+	
+	productRepository.save(productFromDB);
 		
 	}
 

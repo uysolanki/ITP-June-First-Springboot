@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -218,6 +219,13 @@ public class ProductController {
 	{
 	productService.deleteProduct(pid);
 	return "Product Deleted";
+	}
+	
+	@PutMapping("/updateProduct/{pid}") 
+	public String updateProduct(@RequestBody Product newValues, @PathVariable int pid)
+	{
+		productService.updateProduct(pid,newValues);
+		return "Product Updated";
 	}
 	
 }
