@@ -147,19 +147,12 @@ public class ProductController {
 	
 	
 
-	@GetMapping("/getAllProductById1/{pid}") 
-	public ResponseEntity<?> getAllProductById1(@PathVariable int pid)
+	@GetMapping("/getProductById1/{pid}") 
+	public ResponseEntity<Product> getAllProductById1(@PathVariable int pid)
 	{
 	Product product=null;
-	try
-	{
-	product=productService.getAllProductById1(pid);
+	product=productService.getAllProductById(pid);
 	return new ResponseEntity<Product>(product,HttpStatus.OK) ;
-	}
-	catch(ProductNotFoundException ex)
-	{
-	return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
-	}
 	}
 	
 	@GetMapping("/getAllProductsAbove100") 

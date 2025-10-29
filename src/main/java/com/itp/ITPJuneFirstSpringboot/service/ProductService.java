@@ -41,7 +41,7 @@ public class ProductService {
 	{
 		product=productBox.get();
 	}
-	else throw new ProductNotFoundException("Product Not Found");
+	else throw new ProductNotFoundException("Product with ID " + pid + ", Does not Exist in our Database");
 	return product;
 	}
 	
