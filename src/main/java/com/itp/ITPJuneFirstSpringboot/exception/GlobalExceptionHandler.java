@@ -1,15 +1,19 @@
 package com.itp.ITPJuneFirstSpringboot.exception;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.itp.ITPJuneFirstSpringboot.response.ErrorResponse;
+import com.itp.ITPJuneFirstSpringboot.response.ValidationError;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,6 +42,19 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ErrorResponse>(error,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<ValidationError>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+			 List<ValidationError> errors = new ArrayList<>();
+			 for (Object error :  ex.getBindingResult().getAllErrors()) 
+				{
+				 	FieldError err =(FieldError)error;
+					ValidationError err1 = new ValidationError(err.getDefaultMessage(),err.getField(), err.getRejectedValue());
+			        errors.add(err1);
+			    }
+
+			 return new ResponseEntity<List<ValidationError>>(errors,HttpStatus.BAD_REQUEST);
+		}
+    }
+	
 	
 
-}

@@ -1,22 +1,30 @@
 package com.itp.ITPJuneFirstSpringboot.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itp.ITPJuneFirstSpringboot.exception.ProductNotFoundException;
 import com.itp.ITPJuneFirstSpringboot.model.Product;
+import com.itp.ITPJuneFirstSpringboot.response.ValidationError;
 import com.itp.ITPJuneFirstSpringboot.service.ProductService;
+
+import javax.validation.Valid;
+
+//import jakarta.validation.Valid;
 
 @RestController
 public class ProductController {
@@ -53,6 +61,24 @@ public class ProductController {
 	}
 	
 	
+	@PostMapping("/addProductByRequestParam")  //end point / api
+	public Product addProductByRequestParam(
+			@RequestParam("pTitle") String prodTitle,
+			@RequestParam("pDesc") String prodDesc,
+			@RequestParam("pCat") String prodCategory,
+			@RequestParam("pPrice") double prodPrice
+			)
+	{
+		Product p=Product.builder()
+				.productTitle(prodTitle)
+				.productDesc(prodDesc)
+				.productCategory(prodCategory)
+				.price(prodPrice)
+				.build();
+		
+		Product p1=productService.addProduct1(p);
+		return p1;
+	}
 	
 	
 	@PostMapping("/addProductByPathVariable/{pTitle}/{pDesc}/{pCat}/{pPrice}")  //end point / api
@@ -95,9 +121,10 @@ public class ProductController {
 	}
 	
 	@PostMapping("/addProductByRequestBody")  //end point / api
-	public Product addProductByRequestBody(@RequestBody Product p)
-	{		
-		return productService.addProduct1(p); 
+	public ResponseEntity<?> addProductByRequestBody(@RequestBody @Valid  Product p)
+	{	
+		System.out.println("test");
+		return new ResponseEntity<Product>(productService.addProduct1(p),HttpStatus.CREATED); 
 	}
 	
 	@PostMapping("/addMultipleProducts")  //end point / api
