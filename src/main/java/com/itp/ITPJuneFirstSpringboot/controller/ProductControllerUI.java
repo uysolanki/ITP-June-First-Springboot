@@ -39,7 +39,7 @@ public class ProductControllerUI {
 		return "redirect:/getAllProducts";
 	}
 	
-	@GetMapping("/getAllProducts") 
+	@RequestMapping("/getAllProducts") 
 	public String getAllProducts(Model model)
 	{
 	List<Product> products=	productService.getAllProducts();
@@ -52,5 +52,21 @@ public class ProductControllerUI {
 	{
 	productService.deleteProduct(pid);
 	return "redirect:/getAllProducts";
+	}
+	
+	@RequestMapping("/updateProductForm/{pid}")
+	public String updateProductForm(@PathVariable int pid,Model model)
+	{
+    System.out.println("Inside updateProductForm");
+	Product p=productService.getAllProductById(pid);
+	model.addAttribute("product",p);
+	return "update-product-form";
+	}
+	
+	@PostMapping("/updateProduct/{prodId}")
+	public String updateProduct(@PathVariable int prodId, @ModelAttribute @Valid Product product)
+	{
+		productService.updateProduct(prodId,product);
+		return "redirect:/getAllProducts";
 	}
 }

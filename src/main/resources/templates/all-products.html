@@ -34,6 +34,7 @@
             <td th:text="${product.productCategory}"></td>
             <td th:text="${product.price}"></td>
             <td> <a th:href="@{'/deleteProduct/' + ${product.pid}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a> </td>
+        	<td> <a th:href="@{'/updateProductForm/' + ${product.pid}}" class="btn btn-secondary btn-sm"> Update </a></td>
         </tr>
         </tbody>
     </table>
